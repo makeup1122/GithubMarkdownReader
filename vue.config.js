@@ -1,6 +1,7 @@
 const path = require('path')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 module.exports = {
+  publicPath: '/gmr/',
   devServer: {
     disableHostCheck: true,
     port: 8080
