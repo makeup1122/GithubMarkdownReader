@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import zhHans from 'vuetify/es5/locale/zh-Hans' // 加载Vuetify中文包
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
-// import 'vuetify/dist/vuetify.min.css'
-// import Snackbar from '@/components/Snackbar/index'
-// Vue.prototype.$message = Snackbar
 Vue.use(Vuetify)
 export default new Vuetify({
   icons: {
