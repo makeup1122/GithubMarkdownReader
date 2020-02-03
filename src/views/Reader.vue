@@ -130,7 +130,7 @@ export default {
                   event.preventDefault()
                   const hrefOrigin = ele.getAttribute('href')
                   const href = /^.\//.test(hrefOrigin) ? hrefOrigin.substring(2) : hrefOrigin
-                  console.log(href)
+                  // console.log(href)
                   const i = href.lastIndexOf('#')
                   let path = ''
                   if (i === -1) {
