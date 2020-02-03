@@ -1,6 +1,6 @@
 <!-- RepoBranches -->
 <template>
-  <v-select solo @input="inputHandle" :value="value" :items="branches" item-text="name" return-object></v-select>
+  <v-select solo prepend-inner-icon="mdi-directions-fork" @input="inputHandle" :value="value" :items="branches" item-text="name" return-object></v-select>
 </template>
 
 <script>

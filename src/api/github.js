@@ -52,3 +52,33 @@ export function getBlob(owner, repo, fileSha) {
     })
   })
 }
+
+export function getEmojis() {
+  return instance({
+    url: '/emojis',
+    method: 'GET'
+  })
+}
+export function postMarkdown(markdown) {
+  return instance({
+    url: '/markdown',
+    method: 'POST',
+    data: {
+      text: markdown,
+      mode: 'markdown',
+      content: 'github/gollum'
+    }
+  })
+}
+
+export function search(q = 'language:java', sort = 'stars', order = 'desc') {
+  return instance({
+    url: '/search/repositories',
+    method: 'GET',
+    params: {
+      q,
+      sort,
+      order
+    }
+  })
+}

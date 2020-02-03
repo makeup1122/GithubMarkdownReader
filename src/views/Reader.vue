@@ -1,22 +1,27 @@
 <!--  -->
 <template>
 <div>
-  <v-toolbar dense>
-    <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-    <v-toolbar-title>{{owner}}/{{repo}}</v-toolbar-title>
+  <v-app-bar app dense fixed clipped>
+    <v-app-bar-nav-icon @click="drawerLeft = !drawerLeft"></v-app-bar-nav-icon>
+    <v-toolbar-title>
+      <a :href="$route.query.r" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+        {{owner}}/{{repo}}
+      </a>
+      </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon text :to="{ name: 'HomePage'}">
       <v-icon>mdi-home</v-icon>
     </v-btn>
-  </v-toolbar>
-  <v-navigation-drawer
-  app
-  clipped
-  color="blue-grey lighten-4"
-  v-model="drawer"
-  >
+    <v-btn icon text @click="drawerRight = !drawerRight">
+      <v-icon>mdi-settings</v-icon>
+    </v-btn>
+  </v-app-bar>
+  <v-navigation-drawer app v-model="drawerLeft">
     <RepoBranches :value="branche" @input="brancheHandle"></RepoBranches>
     <RepoTree :root-tree="rootTree"  @input="activeHandle"></RepoTree>
+  </v-navigation-drawer>
+  <v-navigation-drawer app right v-model="drawerRight">
+    <Settings></Settings>
   </v-navigation-drawer>
   <v-container fluid>
     <v-row>
@@ -37,13 +42,15 @@ import { mapGetters } from 'vuex'
 import * as API from '@/api/github.js'
 import RepoBranches from '@/components/RepoBranches.vue'
 import RepoTree from '@/components/RepoTree.vue'
+import Settings from '@/components/Settings.vue'
 const marked = require('marked')
 export default {
   name: 'Reader',
-  components: { RepoBranches, RepoTree },
+  components: { RepoBranches, RepoTree, Settings },
   data: function () {
     return {
-      drawer: true,
+      drawerLeft: true,
+      drawerRight: false,
       markdownStr: '',
       markdown: '',
       branche: null,
@@ -121,7 +128,9 @@ export default {
               } else {
                 ele.addEventListener('click', function(event) {
                   event.preventDefault()
-                  const href = ele.getAttribute('href')
+                  const hrefOrigin = ele.getAttribute('href')
+                  const href = /^.\//.test(hrefOrigin) ? hrefOrigin.substring(2) : hrefOrigin
+                  console.log(href)
                   const i = href.lastIndexOf('#')
                   let path = ''
                   if (i === -1) {
@@ -140,6 +149,7 @@ export default {
               if (!src.startsWith('http')) {
                 ele.src = this.getRawUrl(src)
               }
+              ele.style = 'max-width:100%'
             }
           })
         })

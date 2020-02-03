@@ -12,7 +12,6 @@ export default new Vuetify({
     current: 'zhHans'
   },
   theme: {
-    dark: false,
     themes: {
       light: {
         // primary: '#0F4C82',
