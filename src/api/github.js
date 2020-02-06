@@ -71,14 +71,17 @@ export function postMarkdown(markdown) {
   })
 }
 
-export function search(q = 'language:java', sort = 'stars', order = 'desc') {
+export function search(q = '', sort = 'stars', order = 'desc') {
   return instance({
-    url: '/search/repositories',
+    url: '/search/repositories?q=' + q,
     method: 'GET',
     params: {
-      q,
       sort,
       order
     }
   })
+}
+// 趋势数据
+export function trend() {
+  // todo
 }

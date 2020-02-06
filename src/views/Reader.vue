@@ -1,34 +1,14 @@
 <!--  -->
 <template>
 <div>
-  <v-app-bar app dense fixed clipped>
-    <v-app-bar-nav-icon @click="drawerLeft = !drawerLeft"></v-app-bar-nav-icon>
-    <v-toolbar-title>
-      <a :href="$route.query.r" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
-        {{owner}}/{{repo}}
-      </a>
-      </v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-btn icon text :to="{ name: 'HomePage'}">
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <v-btn icon text @click="drawerRight = !drawerRight">
-      <v-icon>mdi-settings</v-icon>
-    </v-btn>
-  </v-app-bar>
-  <v-navigation-drawer app v-model="drawerLeft">
+  <ReaderBar/>
+  <NaviLeft>
     <RepoBranches :value="branche" @input="brancheHandle"></RepoBranches>
     <RepoTree :root-tree="rootTree"  @input="activeHandle"></RepoTree>
-  </v-navigation-drawer>
-  <v-navigation-drawer app right v-model="drawerRight">
-    <Settings></Settings>
-  </v-navigation-drawer>
+  </NaviLeft>
+  <NaviRight/>
   <v-container fluid>
     <v-row>
-      <!-- <v-col cols="4">
-        <RepoBranches :value="branche" @input="brancheHandle"></RepoBranches>
-        <RepoTree :root-tree="rootTree"  @input="activeHandle"></RepoTree>
-      </v-col> -->
       <v-col cols="12" id="readerwrap">
         <v-progress-circular v-if="markdown === ''" indeterminate color="primary"></v-progress-circular>
         <div v-else v-html="markdown"></div>
@@ -40,17 +20,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as API from '@/api/github.js'
-import RepoBranches from '@/components/RepoBranches.vue'
-import RepoTree from '@/components/RepoTree.vue'
-import Settings from '@/components/Settings.vue'
+import RepoBranches from './components/RepoBranches.vue'
+import RepoTree from './components/RepoTree.vue'
+import ReaderBar from './components/ReaderBar.vue'
+import NaviRight from './components/NaviRight.vue'
+import NaviLeft from './components/NaviLeft.vue'
 const marked = require('marked')
 export default {
   name: 'Reader',
-  components: { RepoBranches, RepoTree, Settings },
+  components: { RepoBranches, ReaderBar, NaviRight, RepoTree, NaviLeft },
   data: function () {
     return {
-      drawerLeft: true,
-      drawerRight: false,
       markdownStr: '',
       markdown: '',
       branche: null,
@@ -83,6 +63,14 @@ export default {
     path: function() {
       let index = this.active.path.lastIndexOf('/')
       return this.active.path.substring(0, index + 1)
+    },
+    drawerStatus: {
+      get: function() {
+        return this.$store.state.drawerLeft
+      },
+      set: function(newVal) {
+        this.$store.commit('changeDrawerLeft')
+      }
     }
   },
   methods: {

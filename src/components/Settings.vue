@@ -1,17 +1,10 @@
-<!--  -->
+<!-- Settings -->
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-switch inset v-model="darkTheme" :label="darkTheme ? '深色' : '浅色'" ></v-switch>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-switch inset v-model="darkTheme" :label="darkTheme ? '夜晚' : '白天'" ></v-switch>
 </template>
-
 <script>
 export default {
-  name: 'NavigationRight',
+  name: 'NaviRight',
   components: {},
   data: function () {
     return {
@@ -22,10 +15,6 @@ export default {
     darkTheme: function(newVal) {
       this.$vuetify.theme.dark = newVal
     }
-  },
-  computed: {},
-  methods: {}
+  }
 }
 </script>
-<style scoped>
-</style>
