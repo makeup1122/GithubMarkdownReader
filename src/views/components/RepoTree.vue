@@ -1,6 +1,8 @@
 <!-- RepoTree -->
 <template>
+<div>
   <v-treeview
+  v-if="!loading"
   v-model="selected"
   :active.sync="active"
   :open.sync="open"
@@ -22,6 +24,8 @@
       <v-icon v-else>{{ fileIcon(item.path) }}</v-icon>
     </template>
   </v-treeview>
+  <v-progress-circular v-if="loading" indeterminate color="primary"></v-progress-circular>
+</div>
 </template>
 
 <script>
@@ -34,6 +38,11 @@ export default {
       default: () => {
         return []
       }
+    }
+  },
+  computed: {
+    loading: function() {
+      return this.rootTree.length === 0
     }
   },
   data: function () {

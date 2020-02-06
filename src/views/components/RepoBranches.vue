@@ -1,6 +1,6 @@
 <!-- RepoBranches -->
 <template>
-  <v-select filled prepend-inner-icon="mdi-directions-fork" @input="inputHandle" :value="value" :items="branches" item-text="name" return-object></v-select>
+  <v-select :loading="loading" filled prepend-inner-icon="mdi-directions-fork" @input="inputHandle" :value="value" :items="branches" item-text="name" return-object></v-select>
 </template>
 
 <script>
@@ -17,12 +17,14 @@ export default {
   },
   data: function () {
     return {
-      branches: []
+      branches: [],
+      loading: true
     }
   },
   mounted: function () {
     getBranches(this.$store.getters.owner, this.$store.getters.repo).then(res => {
       this.branches = res.data
+      this.loading = false
       this.$emit('input', this.branches[0])
     })
   },

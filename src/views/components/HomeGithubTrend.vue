@@ -29,8 +29,8 @@
     </v-row>
     <v-row dense>
       <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="item in items" :key="item.node_id">
-        <v-card hover :to="{ name: 'Reader', query: { r: item.html_url}}">
-          <v-card-title>
+        <v-card hover>
+          <v-card-title :to="{ name: 'Reader', query: { r: item.html_url}}">
             <p class="d-inline-block text-truncate" >{{item.full_name}}</p>
           </v-card-title>
           <v-card-subtitle>
@@ -46,7 +46,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn small text :href="item.html_url" target="_blank"><v-icon small>mdi-launch</v-icon>Github</v-btn>
-            <v-btn small text><v-icon>mdi-markdown</v-icon>Read</v-btn>
+            <v-btn small text :to="{ name: 'Reader', query: { r: item.html_url}}"><v-icon>mdi-markdown</v-icon>Read</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

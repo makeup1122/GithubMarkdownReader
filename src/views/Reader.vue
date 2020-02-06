@@ -63,14 +63,6 @@ export default {
     path: function() {
       let index = this.active.path.lastIndexOf('/')
       return this.active.path.substring(0, index + 1)
-    },
-    drawerStatus: {
-      get: function() {
-        return this.$store.state.drawerLeft
-      },
-      set: function(newVal) {
-        this.$store.commit('changeDrawerLeft')
-      }
     }
   },
   methods: {
