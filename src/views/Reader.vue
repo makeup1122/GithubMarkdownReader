@@ -7,14 +7,7 @@
     <RepoTree :root-tree="rootTree"  @input="activeHandle"></RepoTree>
   </NaviLeft>
   <NaviRight/>
-  <v-container fluid>
-    <v-row>
-      <v-col cols="12" id="readerwrap">
-        <v-progress-circular v-if="markdown === ''" indeterminate color="primary"></v-progress-circular>
-        <div v-else v-html="markdown"></div>
-      </v-col>
-    </v-row>
-  </v-container>
+  <MarkdownView v-model="active" :trees="trees" :branche="branche"></MarkdownView>
 </div>
 </template>
 <script>
@@ -25,14 +18,12 @@ import RepoTree from './components/RepoTree.vue'
 import ReaderBar from './components/ReaderBar.vue'
 import NaviRight from './components/NaviRight.vue'
 import NaviLeft from './components/NaviLeft.vue'
-const marked = require('marked')
+import MarkdownView from './components/MarkdownView.vue'
 export default {
   name: 'Reader',
-  components: { RepoBranches, ReaderBar, NaviRight, RepoTree, NaviLeft },
+  components: { RepoBranches, ReaderBar, NaviRight, RepoTree, NaviLeft, MarkdownView },
   data: function () {
     return {
-      markdownStr: '',
-      markdown: '',
       branche: null,
       trees: {
         tree: []
@@ -59,10 +50,6 @@ export default {
         e.name = e.path.toLowerCase()
         return e
       }).reverse()
-    },
-    path: function() {
-      let index = this.active.path.lastIndexOf('/')
-      return this.active.path.substring(0, index + 1)
     }
   },
   methods: {
@@ -89,57 +76,7 @@ export default {
     },
     activeHandle: function(blob) {
       this.active = blob
-      const _that = this
-      const patt = /.md$/i
-      if (patt.test(blob.path)) {
-        this.markdown = ''
-        API.getBlob(this.owner, this.repo, blob.sha).then(res => {
-          this.markdownStr = res
-          // eslint-disable-next-line
-          this.markdown = marked(res)
-          const wrap = document.getElementById('readerwrap')
-          const a = wrap.getElementsByTagName('a')
-          const img = wrap.getElementsByTagName('img')
-          this.$nextTick(function() {
-            for (let index = 0; index < a.length; index++) {
-              const ele = a[index]
-              if (ele.getAttribute('href').startsWith('http')) {
-                ele.target = '_blank'
-              } else {
-                ele.addEventListener('click', function(event) {
-                  event.preventDefault()
-                  const hrefOrigin = ele.getAttribute('href')
-                  const href = /^.\//.test(hrefOrigin) ? hrefOrigin.substring(2) : hrefOrigin
-                  // console.log(href)
-                  const i = href.lastIndexOf('#')
-                  let path = ''
-                  if (i === -1) {
-                    path = decodeURIComponent(_that.path + href)
-                  } else {
-                    path = decodeURIComponent(_that.path + href.substring(0, i))
-                  }
-                  const b = _that.trees.tree.find(e => e.path === path)
-                  if (b) _that.activeHandle(b)
-                })
-              }
-            }
-            for (let index = 0; index < img.length; index++) {
-              const ele = img[index]
-              const src = ele.getAttribute('src')
-              if (!src.startsWith('http')) {
-                ele.src = this.getRawUrl(src)
-              }
-              ele.style = 'max-width:100%'
-            }
-          })
-        })
-      }
-    },
-    getRawUrl: function(src) {
-      return this.$route.query.r + '/blob/' + this.branche.name + '/' + this.path + src + '?raw=true'
     }
   }
 }
 </script>
-<style scoped>
-</style>
