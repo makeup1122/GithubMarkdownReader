@@ -9,6 +9,7 @@
         </a>
         </v-toolbar-title>
       <v-spacer></v-spacer>
+      <RepoSearch/>
       <v-btn icon text :to="{ name: 'HomePage'}">
         <v-icon>mdi-home</v-icon>
       </v-btn>
@@ -19,8 +20,10 @@
   </div>
 </template>
 <script>
+import RepoSearch from './RepoSearch.vue'
 export default {
   name: 'AppBar',
+  components: { RepoSearch },
   computed: {
     title: function() {
       return process.env.VUE_APP_TITLE

@@ -21,14 +21,29 @@ export default {
       loading: true
     }
   },
+  computed: {
+    repoUrl: function() {
+      return this.$store.state.repoUrl
+    }
+  },
+  watch: {
+    repoUrl: function(newVal) {
+      this.fetchData()
+    }
+  },
   mounted: function () {
-    getBranches(this.$store.getters.owner, this.$store.getters.repo).then(res => {
-      this.branches = res.data
-      this.loading = false
-      this.$emit('input', this.branches[0])
-    })
+    this.fetchData()
   },
   methods: {
+    fetchData: function() {
+      if (this.$store.getters.owner && this.$store.getters.repo) {
+        getBranches(this.$store.getters.owner, this.$store.getters.repo).then(res => {
+          this.branches = res.data
+          this.loading = false
+          this.$emit('input', this.branches[0])
+        })
+      }
+    },
     inputHandle: function(e) {
       this.$emit('input', e)
     }
