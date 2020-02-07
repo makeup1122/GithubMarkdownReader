@@ -20,7 +20,6 @@
 </template>
 <script>
 import MixinRepo from '@/mixins/repo.js'
-import * as API from '@/api/github.js'
 import HomeBar from './components/HomeBar.vue'
 import HomeGithubTrend from './components/HomeGithubTrend.vue'
 import HomeHistory from './components/HomeHistory.vue'
@@ -31,7 +30,7 @@ export default {
   mixins: [ MixinRepo ],
   data: function () {
     return {
-      history: [
+      recommends: [
         'https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts',
         'https://github.com/heibaiying/Full-Stack-Notes',
         'https://github.com/heibaiying/BigData-Notes',
@@ -40,29 +39,21 @@ export default {
         'https://github.com/jackfrued/Python-100-Days',
         'https://github.com/xingshaocheng/architect-awesome'
       ],
-      historyItems: [],
-      typeIndex: null,
+      typeIndex: 0,
       typeCate: [
         'HomeGithubTrend',
         'HomeHistory'
       ]
     }
   },
+  created: function() {
+  },
   mounted: function() {
+    // this.typeIndex = parseInt(Cookie.getToken('GMR_type_index'))
   },
   computed: {
   },
   methods: {
-    getRepoInfo: function() {
-      const _that = this
-      this.history.forEach(e => {
-        const owner = this.getOwner(e)
-        const repo = this.getRepo(e)
-        API.getRepoInfo(owner, repo).then(res => {
-          _that.historyItems.push(res.data)
-        })
-      })
-    }
   }
 }
 </script>
