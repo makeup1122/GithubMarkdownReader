@@ -21,12 +21,12 @@
 <script>
 import MixinRepo from '@/mixins/repo.js'
 import HomeBar from './components/HomeBar.vue'
-import HomeGithubTrend from './components/HomeGithubTrend.vue'
+import GithubTrend from './components/GithubTrend.vue'
 import HomeHistory from './components/HomeHistory.vue'
 import RepoSearch from './components/RepoSearch.vue'
 export default {
   name: 'HomePage',
-  components: { HomeBar, RepoSearch, HomeGithubTrend, HomeHistory },
+  components: { HomeBar, RepoSearch, GithubTrend, HomeHistory },
   mixins: [ MixinRepo ],
   data: function () {
     return {
@@ -41,7 +41,7 @@ export default {
       ],
       typeIndex: 0,
       typeCate: [
-        'HomeGithubTrend',
+        'GithubTrend',
         'HomeHistory'
       ]
     }

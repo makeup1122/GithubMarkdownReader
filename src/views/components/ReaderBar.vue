@@ -9,7 +9,7 @@
         </a>
         </v-toolbar-title>
       <v-spacer></v-spacer>
-      <RepoSearch/>
+      <RepoSearch class="hidden-sm-and-down" />
       <v-btn icon text :to="{ name: 'HomePage'}">
         <v-icon>mdi-home</v-icon>
       </v-btn>
