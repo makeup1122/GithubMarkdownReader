@@ -12,7 +12,11 @@
   label="Search or Github Repo URL"
   v-model="repoUrl"
   prepend-inner-icon="mdi-magnify"
-  v-on:keyup.enter="readerHandle(repoUrl)"></v-text-field>
+  v-on:keyup.enter="readerHandle(repoUrl)">
+    <template slot="prepend-inner">
+      <Octicons small name="search"/>
+    </template>
+  </v-text-field>
 </template>
 <script>
 export default {

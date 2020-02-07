@@ -1,6 +1,17 @@
 <!-- RepoBranches -->
 <template>
-  <v-select :loading="loading" filled prepend-inner-icon="mdi-directions-fork" @input="inputHandle" :value="value" :items="branches" item-text="name" return-object></v-select>
+  <v-select
+  :loading="loading"
+  filled
+  @input="inputHandle"
+  :value="value"
+  :items="branches"
+  item-text="name"
+  return-object>
+  <template slot="prepend-inner">
+    <Octicons name="git-branch"/>
+  </template>
+  </v-select>
 </template>
 
 <script>

@@ -18,10 +18,12 @@
   transition
   >
     <template v-slot:prepend="{ item, open }">
-      <v-icon v-if="item.type === 'tree'">
-        {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
-      </v-icon>
-      <v-icon v-else>{{ fileIcon(item.path) }}</v-icon>
+      <template v-if="item.type === 'tree'">
+        <Octicons name="file-directory"/>
+      </template>
+      <template v-else>
+        <Octicons :name="fileIcon(item.path)"/>
+      </template>
     </template>
   </v-treeview>
   <v-progress-circular v-if="loading" indeterminate color="primary"></v-progress-circular>
@@ -51,16 +53,11 @@ export default {
       active: [],
       selected: [],
       files: {
-        html: 'mdi-language-html5',
-        js: 'mdi-nodejs',
-        json: 'mdi-json',
-        md: 'mdi-markdown',
-        pdf: 'mdi-file-pdf',
-        png: 'mdi-file-image',
-        txt: 'mdi-file-document-outline',
-        xls: 'mdi-file-excel',
-        jpg: 'mdi-image',
-        jpeg: 'mdi-image'
+        md: 'markdown',
+        pdf: 'file-pdf',
+        png: 'file-media',
+        jpg: 'file-media',
+        jpeg: 'file-media'
       }
     }
   },
@@ -69,7 +66,7 @@ export default {
       let index1 = fileName.lastIndexOf('.')
       let index2 = fileName.length
       let suffix = fileName.substring(index1 + 1, index2)
-      return this.files[suffix] || 'mdi-file-outline'
+      return this.files[suffix] || 'file'
     },
     activeHandle: function(blobs) {
       if (blobs.length === 1) {

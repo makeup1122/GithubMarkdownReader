@@ -10,8 +10,8 @@
       <v-row>
         <v-col>
           <v-tabs v-model="typeIndex">
-            <v-tab>Trend</v-tab>
-            <v-tab>History</v-tab>
+            <v-tab><Octicons small name="flame"/>Trend</v-tab>
+            <v-tab><Octicons small name="history"/>History</v-tab>
           </v-tabs>
           <component v-bind:is="typeCate[typeIndex]"></component>
         </v-col>
@@ -19,7 +19,6 @@
     </v-container>
 </template>
 <script>
-import MixinRepo from '@/mixins/repo.js'
 import HomeBar from './components/HomeBar.vue'
 import GithubTrend from './components/GithubTrend.vue'
 import HomeHistory from './components/HomeHistory.vue'
@@ -27,7 +26,6 @@ import RepoSearch from './components/RepoSearch.vue'
 export default {
   name: 'HomePage',
   components: { HomeBar, RepoSearch, GithubTrend, HomeHistory },
-  mixins: [ MixinRepo ],
   data: function () {
     return {
       recommends: [

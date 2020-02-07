@@ -13,14 +13,12 @@
   </v-container>
 </template>
 <script>
-import MixinRepo from '@/mixins/repo.js'
 import Storage from '@/utils/storage.js'
 import { getRepoInfo } from '@/api/github.js'
 import RepoCard from './RepoCard.vue'
 export default {
   name: 'HomeHistory',
   components: { RepoCard },
-  mixins: [ MixinRepo ],
   data: function () {
     return {
       history: [],

@@ -13,14 +13,13 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon text href="https://github.com/makeup1122/GithubMarkdownReader" target="_blank">
-      <v-icon>mdi-github-circle</v-icon>
+      <Octicons name="mark-github"/>
     </v-btn>
   </v-app-bar>
 </template>
 <script>
 export default {
   name: 'HomeBar',
-  components: {},
   computed: {
     title: function() {
       return process.env.VUE_APP_TITLE
