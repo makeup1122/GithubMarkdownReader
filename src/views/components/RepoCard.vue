@@ -9,7 +9,7 @@
       <p class="d-inline-block text-truncate">{{item.full_name}}</p>
     </v-card-title>
     <v-card-subtitle class="pb-1">
-      <Octicons small v-if="item.language" name="file"/>{{item.language}}
+      <Octicons small v-if="item.language" name="file"/><span :style="{color: item.language_color}">{{item.language}}</span>
       <Octicons small name="star"/>{{item.stargazers_count}}
       <Octicons small name="repo-forked"/>{{item.forks_count}}
     </v-card-subtitle>

@@ -9,7 +9,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-tabs v-model="typeIndex">
+          <v-tabs v-model="typeIndex" dense>
             <v-tab><Octicons small name="flame"/>Trend</v-tab>
             <v-tab><Octicons small name="history"/>History</v-tab>
           </v-tabs>

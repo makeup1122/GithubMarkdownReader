@@ -20,3 +20,9 @@ export default {
   name: 'App'
 }
 </script>
+<style>
+.v-tab,
+.v-btn{
+text-transform: none !important;
+}
+</style>

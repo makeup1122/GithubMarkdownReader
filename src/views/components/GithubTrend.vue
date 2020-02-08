@@ -6,16 +6,16 @@
 <template>
   <v-container class="pa-0">
     <v-row dense>
-      <v-col cols="6" sm="6" md="4" lg="3" xl="2" >
+      <v-col>
         <v-select
         dense
         solo
         :loading="trendSearchLoading"
         @change="getTrend"
-        :items="dateItems"
-        v-model="trendSearchCreated"></v-select>
+        :items="[{ text: '今日', value: 'daily' }, { text: '本周', value: 'weekly' }, { text: '本月', value: 'monthly' }]"
+        v-model="trendSearchSince"></v-select>
       </v-col>
-      <v-col cols="6" sm="6" md="4" lg="3" xl="2" >
+      <v-col >
         <v-combobox
         clearable
         :loading="trendSearchLoading"
@@ -26,9 +26,16 @@
         v-model="trendSearchLanguage"
         :items="languageItems"></v-combobox>
       </v-col>
+      <v-spacer></v-spacer>
+      <v-col>
+        <v-btn-toggle v-model="trendType" dense>
+          <v-btn>Repositories</v-btn>
+          <v-btn>Developers</v-btn>
+        </v-btn-toggle>
+      </v-col>
     </v-row>
     <v-row dense>
-      <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="item in items" :key="item.node_id">
+      <v-col cols="12" sm="6" md="4" v-for="item in items" :key="item.node_id">
         <RepoCard :item="item"></RepoCard>
       </v-col>
     </v-row>
@@ -36,7 +43,6 @@
 </template>
 <script>
 import * as API from '@/api/github.js'
-import * as DD from '@/utils/date.js'
 import Language from '@/services/github-language.js'
 import RepoCard from './RepoCard.vue'
 export default {
@@ -45,9 +51,9 @@ export default {
   data: function () {
     return {
       items: [],
-      trend: [],
-      trendSearchLanguage: 'markdown',
-      trendSearchCreated: DD.weekBegin(),
+      trendType: '',
+      trendSearchLanguage: '',
+      trendSearchSince: 'daily',
       trendSearchLoading: false
     }
   },
@@ -55,25 +61,23 @@ export default {
     this.getTrend()
   },
   computed: {
-    languageItems: () => { return Language.map(e => e.name) },
-    dateItems: function() {
-      return [
-        { text: '今日', value: DD.todayBegin() },
-        { text: '本周', value: DD.weekBegin() },
-        { text: '本月', value: DD.monthBegin() },
-        { text: '本年', value: DD.yearBegin() }
-      ]
-    },
-    q: function() {
-      // language:markdown+created:>2020-01-01
-      return 'created:>=' + this.trendSearchCreated + (this.trendSearchLanguage ? ('+language:' + this.trendSearchLanguage) : '')
-    }
+    languageItems: () => { return Language.map(e => e.name) }
   },
   methods: {
     getTrend: function() {
       this.trendSearchLoading = true
-      API.search(this.q).then(res => {
-        this.items = this.trend = res.data.items
+      API.trend(this.trendSearchLanguage, this.trendSearchSince, this.trendType).then(res => {
+        this.items = res.data.map(e => {
+          return {
+            html_url: e.url,
+            full_name: e.author + '/' + e.name,
+            language: e.language,
+            language_color: e.languageColor,
+            stargazers_count: e.stars,
+            forks_count: e.forks,
+            description: e.description
+          }
+        })
       }).finally(() => {
         this.trendSearchLoading = false
       })

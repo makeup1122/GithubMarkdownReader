@@ -1,3 +1,4 @@
+'use strict'
 import axios from 'axios'
 const instance = axios.create({
   baseURL: 'https://api.github.com',
@@ -82,15 +83,11 @@ export function search(q = '', sort = 'stars', order = 'desc') {
   })
 }
 // 趋势数据
-export function trend() {
-  return axios({
-    url: 'https://github.com/trending/?since=monthly',
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+export function trend(lang, since = 'daily', type = 'Repositories') {
+  // https://github.com/huchenme/github-trending-api
+  // https://github-trending-api.now.sh/repositories?language=&since=daily&spoken_language_code=
+  return instance({
+    url: `https://github-trending-api.now.sh/repositories?language=${lang}&since=${since}&spoken_language_code=`,
+    method: 'GET'
   })
-  // return instance({
-  //   url: 'https://github.com/trending/?since=monthly',
-  //   method: 'GET',
-  //   headers: { 'Content-Type': 'application/json' }
-  // })
 }
