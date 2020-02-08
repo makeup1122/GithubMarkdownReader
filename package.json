@@ -10,6 +10,7 @@
   "dependencies": {
     "@primer/octicons": "^9.4.0",
     "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "marked": "^0.8.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.5",

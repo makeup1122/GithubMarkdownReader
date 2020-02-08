@@ -99,7 +99,6 @@ export default {
               } else {
                 path = decodeURIComponent(_that.path + href.substring(0, i))
               }
-              console.log(_that.trees.tree)
               const b = _that.trees.tree.find(e => e.path === path)
               if (b) _that.$emit('input', b)
             })

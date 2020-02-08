@@ -83,5 +83,14 @@ export function search(q = '', sort = 'stars', order = 'desc') {
 }
 // 趋势数据
 export function trend() {
-  // todo
+  return axios({
+    url: 'https://github.com/trending/?since=monthly',
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  // return instance({
+  //   url: 'https://github.com/trending/?since=monthly',
+  //   method: 'GET',
+  //   headers: { 'Content-Type': 'application/json' }
+  // })
 }

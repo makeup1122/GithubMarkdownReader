@@ -16,9 +16,9 @@ import * as API from '@/api/github.js'
 import RepoBranches from './components/RepoBranches.vue'
 import RepoTree from './components/RepoTree.vue'
 import ReaderBar from './components/ReaderBar.vue'
-import NaviRight from './components/NaviRight.vue'
-import NaviLeft from './components/NaviLeft.vue'
-import MarkdownView from './components/MarkdownView.vue'
+import NaviRight from './components/ReaderNaviRight.vue'
+import NaviLeft from './components/ReaderNaviLeft.vue'
+import MarkdownView from './components/ReaderMarkdownView.vue'
 export default {
   name: 'Reader',
   components: { RepoBranches, ReaderBar, NaviRight, RepoTree, NaviLeft, MarkdownView },

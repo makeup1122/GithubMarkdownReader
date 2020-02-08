@@ -39,8 +39,8 @@ export default {
       } else {
         const _that = this
         this.history.forEach(e => {
-          const owner = this.getOwner(e)
-          const repo = this.getRepo(e)
+          const owner = this.$_getOwner(e)
+          const repo = this.$_getRepo(e)
           getRepoInfo(owner, repo).then(res => {
             _that.items.push(res.data)
           })

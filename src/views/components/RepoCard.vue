@@ -17,8 +17,8 @@
       <p class="text-over-three">{{item.description}}</p>
     </v-card-text>
     <v-card-actions>
-      <v-btn :href="item.html_url" target="_blank"><Octicons small name="mark-github"/>Github</v-btn>
-      <v-btn :to="{ name: 'Reader', query: { r: item.html_url}}"><Octicons small name="book"/>Read</v-btn>
+      <v-btn text :href="item.html_url" target="_blank"><Octicons small name="mark-github"/>Github</v-btn>
+      <v-btn text :to="{ name: 'Reader', query: { r: item.html_url}}"><Octicons small name="book"/>Read</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -28,7 +28,7 @@ export default {
   props: {
     item: {
       type: Object,
-      require: true
+      required: true
     }
   }
 }

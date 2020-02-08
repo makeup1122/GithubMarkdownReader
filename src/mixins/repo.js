@@ -1,11 +1,11 @@
 
 const mixin = {
   methods: {
-    getOwner: url => {
+    $_getOwner: url => {
       const w = url.split('/')
       return w[3]
     },
-    getRepo: url => {
+    $_getRepo: url => {
       const w = url.split('/')
       return w[4]
     }
