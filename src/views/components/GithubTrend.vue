@@ -28,9 +28,9 @@
       </v-col>
       <v-spacer></v-spacer>
       <v-col>
-        <v-btn-toggle v-model="trendType" dense>
+        <v-btn-toggle v-model="trendType" dense class="blue--text">
           <v-btn>Repositories</v-btn>
-          <v-btn>Developers</v-btn>
+          <v-btn disabled>Developers</v-btn>
         </v-btn-toggle>
       </v-col>
     </v-row>
@@ -51,7 +51,7 @@ export default {
   data: function () {
     return {
       items: [],
-      trendType: '',
+      trendType: 0,
       trendSearchLanguage: '',
       trendSearchSince: 'daily',
       trendSearchLoading: false

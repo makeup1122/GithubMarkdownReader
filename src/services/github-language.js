@@ -3,6 +3,11 @@
 
 const languages = [
     {
+        name: 'Markdown',
+        value: 'markdown',
+        color: '#ff2b2b',
+    },
+    {
         name: 'Mercury',
         value: 'Mercury',
         color: '#ff2b2b',

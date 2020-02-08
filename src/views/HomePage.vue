@@ -10,8 +10,8 @@
       <v-row>
         <v-col>
           <v-tabs v-model="typeIndex" dense>
-            <v-tab><Octicons small name="flame"/>Trend</v-tab>
-            <v-tab><Octicons small name="history"/>History</v-tab>
+            <v-tab class="title"><Octicons small name="flame"/>Trend</v-tab>
+            <v-tab class="title"><Octicons small name="history"/>History</v-tab>
           </v-tabs>
           <component v-bind:is="typeCate[typeIndex]"></component>
         </v-col>

@@ -4,7 +4,7 @@
  @Date: "2020-02-07 21:10:57"
 -->
 <template>
-  <v-card hover :to="{ name: 'Reader', query: { r: item.html_url}}">
+  <v-card hover>
     <v-card-title>
       <p class="d-inline-block text-truncate">{{item.full_name}}</p>
     </v-card-title>

@@ -84,8 +84,6 @@ export function search(q = '', sort = 'stars', order = 'desc') {
 }
 // 趋势数据
 export function trend(lang, since = 'daily', type = 'Repositories') {
-  // https://github.com/huchenme/github-trending-api
-  // https://github-trending-api.now.sh/repositories?language=&since=daily&spoken_language_code=
   return instance({
     url: `https://github-trending-api.now.sh/repositories?language=${lang}&since=${since}&spoken_language_code=`,
     method: 'GET'
