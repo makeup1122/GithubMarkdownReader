@@ -7,16 +7,16 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12" id="readerwrap">
-        <v-progress-circular v-if="markdown === ''" indeterminate color="primary"></v-progress-circular>
-        <div v-else v-html="markdown"></div>
+        <v-progress-circular v-if="content === ''" indeterminate color="primary"></v-progress-circular>
+        <div v-else v-html="content"></div>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { getBlob } from '@/api/github.js'
-const marked = require('marked')
+import { getReadme, getContent } from '@/api/github.js'
+// const marked = require('marked')
 export default {
   name: 'MarkdownView',
   components: {},
@@ -40,13 +40,12 @@ export default {
   },
   data: function () {
     return {
-      markdownStr: '',
-      markdown: ''
+      content: ''
     }
   },
   watch: {
-    value: function(newVal) {
-      this.fetchBlob()
+    value: function() {
+      this.fetchData()
     }
   },
   computed: {
@@ -54,27 +53,47 @@ export default {
       'owner',
       'repo'
     ]),
-    path: function() {
+    currentPath: function() {
       let index = this.value.path.lastIndexOf('/')
       return this.value.path.substring(0, index + 1)
     }
   },
   methods: {
     getRawUrl: function(src) {
-      return this.$route.query.r + '/blob/' + this.branche.name + '/' + this.path + src + '?raw=true'
+      return this.$route.query.r + '/blob/' + this.branche.name + '/' + this.currentPath + src + '?raw=true'
     },
-    fetchBlob: function() {
-      const patt = /.md$/i
-      if (patt.test(this.value.path)) {
-        this.markdown = ''
-        getBlob(this.owner, this.repo, this.value.sha).then(res => {
-          this.markdownStr = res
-          // eslint-disable-next-line
-          this.markdown = marked(res)
+    fetchData: function() {
+      this.content = ''
+      if (this.value.path === '') {
+        this.fetchReadme()
+      } else {
+        this.fetchContent()
+      }
+    },
+    fetchReadme: function() {
+      getReadme(this.owner, this.repo, this.branche.name).then(res => {
+        this.content = res.data
+      })
+    },
+    fetchContent: function() {
+      if (/.md$/i.test(this.value.path)) {
+        getContent(this.owner, this.repo, this.value.path, this.branche.name).then(res => {
+          this.content = res.data
         }).then(() => {
           this.processMd()
         })
+      } else if (/.txt$/i.test(this.value.path)) {
+        getContent(this.owner, this.repo, this.value.path).then(res => {
+          this.content = res
+        }).then(() => {
+          this.processTxt()
+        })
+      } else {
+        // todo sth
       }
+    },
+    processTxt: function() {
+      // todo
     },
     processMd: function() {
       const _that = this
@@ -85,22 +104,24 @@ export default {
         for (let index = 0; index < a.length; index++) {
           const ele = a[index]
           if (ele.getAttribute('href').startsWith('http')) {
+            // 绝对URL添加target="_blank"属性
             ele.target = '_blank'
           } else {
+            // 相对路径修改点击事件
             ele.addEventListener('click', function(event) {
+              // 阻止默认点击事件
               event.preventDefault()
+              // 获取href属性
               const hrefOrigin = ele.getAttribute('href')
-              // console.log(hrefOrigin)
+              // 去掉./目录
               const href = /^.\//.test(hrefOrigin) ? hrefOrigin.substring(2) : hrefOrigin
-              const i = href.lastIndexOf('#')
-              let path = ''
-              if (i === -1) {
-                path = decodeURIComponent(_that.path + href)
-              } else {
-                path = decodeURIComponent(_that.path + href.substring(0, i))
+              // 去掉锚点参数
+              const path = decodeURIComponent(_that.currentPath + href.split('#')[0])
+              if (path !== '') {
+                // 寻找文件对象
+                const b = _that.trees.tree.find(e => e.path === path)
+                if (b) _that.$emit('input', b)
               }
-              const b = _that.trees.tree.find(e => e.path === path)
-              if (b) _that.$emit('input', b)
             })
           }
         }

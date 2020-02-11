@@ -43,17 +43,32 @@ export function getBlob(owner, repo, fileSha) {
   return new Promise((resolve, reject) => {
     instance({
       url: '/repos/' + owner + '/' + repo + '/git/blobs/' + fileSha,
-      method: 'GET'
+      method: 'GET',
+      headers: { accept: 'application/vnd.github.v3.html' }
     }).then(res => {
       // console.log(window.atob(res.data.content))
-      resolve(decodeURIComponent(escape(window.atob(res.data.content))))
+      // resolve(decodeURIComponent(escape(window.atob(res.data.content))))
       // resolve(decodeURIComponent(window.atob(res.data.content)))
+      resolve(res.data)
     }).catch(err => {
       reject(err)
     })
   })
 }
-
+export function getContent(owner, repo, path, branch = 'master') {
+  return instance({
+    url: `/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
+    method: 'GET',
+    headers: { accept: 'application/vnd.github.v3.html' }
+  })
+}
+export function getReadme(owner, repo, branch = 'master') {
+  return instance({
+    url: `/repos/${owner}/${repo}/contents/readme?ref=${branch}`,
+    method: 'GET',
+    headers: { accept: 'application/vnd.github.v3.html' }
+  })
+}
 export function getEmojis() {
   return instance({
     url: '/emojis',

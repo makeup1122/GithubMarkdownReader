@@ -6,7 +6,7 @@
 <template>
   <v-container class="pa-0">
     <v-row dense>
-      <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="item in items" :key="item.node_id">
+      <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="(item,index) in items" :key="index">
         <RepoCard :item="item"></RepoCard>
       </v-col>
     </v-row>

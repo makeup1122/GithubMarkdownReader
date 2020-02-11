@@ -13,7 +13,9 @@
             <v-tab class="title"><Octicons small name="flame"/>Trend</v-tab>
             <v-tab class="title"><Octicons small name="history"/>History</v-tab>
           </v-tabs>
-          <component v-bind:is="typeCate[typeIndex]"></component>
+          <keep-alive>
+            <component v-bind:is="typeCate[typeIndex]"></component>
+          </keep-alive>
         </v-col>
       </v-row>
     </v-container>

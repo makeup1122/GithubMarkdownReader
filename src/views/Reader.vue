@@ -33,7 +33,6 @@ export default {
       }
     }
   },
-  // watch: function() {},
   created: function () {
     if (/^https:\/\/github.com\/\w+\/\w+/.test(this.$route.query.r)) {
       this.$store.commit('setRepoUrl', this.$route.query.r)
