@@ -1,7 +1,14 @@
 {
-  "name": "markdown-exercise",
+  "name": "github-markdown-reader",
   "version": "0.1.0",
+  "description": "Github Markdown Viewer",
   "private": true,
+  "homepage": "https://github.com/makeup1122/GithubMarkdownReader",
+  "author": "makeup1122 <makeup1123@163.com.com> (https://goingmerry.cn)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:makeup1122/GithubMarkdownReader.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
