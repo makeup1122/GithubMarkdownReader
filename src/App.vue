@@ -1,7 +1,7 @@
 <template>
   <v-app >
     <v-content>
-      <keep-alive>
+      <keep-alive include="['Homepage']">
         <router-view></router-view>
       </keep-alive>
     </v-content>

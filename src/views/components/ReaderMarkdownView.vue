@@ -82,18 +82,11 @@ export default {
         }).then(() => {
           this.processMd()
         })
-      } else if (/.txt$/i.test(this.value.path)) {
-        getContent(this.owner, this.repo, this.value.path).then(res => {
-          this.content = res
-        }).then(() => {
-          this.processTxt()
-        })
       } else {
-        // todo sth
+        getContent(this.owner, this.repo, this.value.path).then(res => {
+          this.content = res.data
+        })
       }
-    },
-    processTxt: function() {
-      // todo
     },
     processMd: function() {
       const _that = this
@@ -126,6 +119,7 @@ export default {
           }
         }
         for (let index = 0; index < img.length; index++) {
+          console.log(index)
           const ele = img[index]
           const src = ele.getAttribute('src')
           if (!src.startsWith('http')) {
