@@ -119,7 +119,6 @@ export default {
           }
         }
         for (let index = 0; index < img.length; index++) {
-          console.log(index)
           const ele = img[index]
           const src = ele.getAttribute('src')
           if (!src.startsWith('http')) {
